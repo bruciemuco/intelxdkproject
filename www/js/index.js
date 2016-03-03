@@ -19,6 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
+               
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -26,7 +27,40 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+        
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        //load the person list. 
+        $(document).ready(function() {
+                $.ajax({
+                    url: "http://bricemuco.com/index.php/api/person",
+                    method: "GET",
+                    headers: {
+                      "x-api-key": "12345"
+                    }
+                }).then(function(data) {
+                   console.log(data);
+                   htmlData = app.createPersonListGroupItems(data);
+                   app.insertInnerHTML("person-list-group",htmlData)
+                   
+                   
+                });
+                $.ajax({
+                    url: "http://bricemuco.com/index.php/api/task",
+                    method: "GET",
+                    headers: {
+                      "x-api-key": "12345"
+                    }
+                }).then(function(data) {
+                   console.log(data);
+                   htmlData = app.createTaskListGroupItems(data);
+                   app.insertInnerHTML("task-list-group",htmlData)
+                   
+                   
+                });
+            });
+         
+       
+       
     },
     // deviceready Event Handler
     //
@@ -45,5 +79,46 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+    loadData: function(){
+       
+          test = 'test';
+          document.getElementById("person-list-group").innerHTML = test;
+    },
+    createPersonListGroupItems: function(response){
+         var html = '';
+    
+        // Step through the rows of the data to get the objects.
+        for(var row in response) {
+            // Step through the columns in
+            // this row.
+            html += '<li class="list-group-item">';
+            html += response[row].email;
+            html += '<button style="float:right;"><a data-target="#PersonDetailModal" data-toggle="modal"><i class="fa fa-arrow-circle-o-right" style="font-size:19px"></i></a></li></button>';
+            console.log(response[row].email);
+        }
+        return html;
+    },
+    createTaskListGroupItems: function(response){
+         var html = '';
+    
+        // Step through the rows of the data to get the objects.
+        for(var row in response) {
+            // Step through the columns in
+            // this row.
+            html += '<li class="list-group-item"> Task ';
+            html += response[row].id;
+            html += '<button style="float:right;"><a href="taskDetail.html"><i class="fa fa-arrow-circle-o-right" style="font-size:19px"></i></a></li></button>';
+            console.log(response[row].email);
+        }
+        return html;
+    },
+    insertInnerHTML: function(id,html){
+        var el = document.getElementById(id);
+    
+        if(!el) {
+            alert('Element with id ' + id + ' not found.');
+        }
+        el.innerHTML = html;
     }
 };

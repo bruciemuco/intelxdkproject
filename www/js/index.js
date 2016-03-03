@@ -92,9 +92,9 @@ var app = {
         for(var row in response) {
             // Step through the columns in
             // this row.
-            html += '<li class="list-group-item">';
+            html += '<li class="list-group-item" style="padding:17px 15px !important;">';
             html += response[row].email;
-            html += '<button style="float:right;"><a data-target="#PersonDetailModal" data-toggle="modal"><i class="fa fa-arrow-circle-o-right" style="font-size:19px"></i></a></li></button>';
+            html += '<a data-target="#PersonDetailModal" data-toggle="modal"><i style="float:right; font-size:30px;"class="fa fa-arrow-circle-o-right" ></i></a></li>';
             console.log(response[row].email);
         }
         return html;
@@ -106,9 +106,9 @@ var app = {
         for(var row in response) {
             // Step through the columns in
             // this row.
-            html += '<li class="list-group-item"> Task ';
+            html += '<li class="list-group-item" style="padding:17px 15px !important;"> Task ';
             html += response[row].id;
-            html += '<button style="float:right;"><a href="taskDetail.html"><i class="fa fa-arrow-circle-o-right" style="font-size:19px"></i></a></li></button>';
+            html += '<a href="taskDetail.html"><i style="float:right; font-size:25px"class="fa fa-arrow-circle-o-right"></i></a></li>';
             console.log(response[row].email);
         }
         return html;
